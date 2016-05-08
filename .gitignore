@@ -26,3 +26,4 @@ _testmain.go
 debug
 vendor/
 enliven
+main
