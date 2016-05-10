@@ -7,11 +7,12 @@ import (
 
 	"github.com/hickeroar/enliven"
 	_ "github.com/hickeroar/enliven-example/statik"
+	"github.com/hickeroar/enliven/middleware"
 	"github.com/hickeroar/enliven/plugins"
 	"github.com/jinzhu/gorm"
 )
 
-func rootHandler(rw http.ResponseWriter, r *http.Request, ev enliven.Enliven) {
+func rootHandler(rw http.ResponseWriter, r *http.Request, ev enliven.Enliven, ctx *enliven.Context) {
 	rw.Header().Set("Content-Type", "text/plain")
 	rw.Write([]byte("It's working!!"))
 }
@@ -38,6 +39,9 @@ func main() {
 	}
 
 	ev := enliven.New(config)
+
+	// Adding session management middleware
+	ev.AddMiddlewareHandler(middleware.NewRedisSessionMiddleware("127.0.0.1:6379", ""))
 
 	// Serving static assets from the ./static/ folder as the /assets/ route
 	ev.InitPlugin(plugins.NewStaticAssetPlugin("/assets/", "./static/"))
