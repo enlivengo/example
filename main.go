@@ -13,8 +13,9 @@ import (
 )
 
 func rootHandler(rw http.ResponseWriter, r *http.Request, ev enliven.Enliven, ctx *enliven.Context) {
+	ctx.Session.Set("foo", "bar")
 	rw.Header().Set("Content-Type", "text/plain")
-	rw.Write([]byte("It's working!!"))
+	rw.Write([]byte("Session Variable: foo = " + ctx.Session.Get("foo")))
 }
 
 // User Is a simple user model
@@ -37,8 +38,7 @@ func main() {
 		"db.dbname":   "enliven",
 		"db.password": "postgres",
 
-		"session.redis.address":  "127.0.0.1:6379",
-		"session.redis.password": "",
+		"session.redis.address": "127.0.0.1:6379",
 
 		"static.assets.route": "/assets/",
 		"static.assets.path":  "./static/",
@@ -48,6 +48,7 @@ func main() {
 
 	// Adding session management middleware
 	ev.AddMiddleware(middleware.NewRedisSessionMiddleware(ev.GetConfig()))
+	//ev.AddMiddleware(middleware.NewFileSessionMiddleware(ev.GetConfig()))
 
 	// Serving static assets from the ./static/ folder as the /assets/ route
 	ev.InitPlugin(plugins.NewStaticAssetsPlugin(ev.GetConfig()))
