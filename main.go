@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"net/http"
 	"time"
 
 	"github.com/hickeroar/enliven"
@@ -12,10 +11,10 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-func rootHandler(rw http.ResponseWriter, r *http.Request, ev enliven.Enliven, ctx *enliven.Context) {
+func rootHandler(ctx *enliven.Context) {
 	ctx.Session.Set("foo", "bar")
-	rw.Header().Set("Content-Type", "text/plain")
-	rw.Write([]byte("Session Variable: foo = " + ctx.Session.Get("foo")))
+	ctx.Response.Header().Set("Content-Type", "text/plain")
+	ctx.Response.Write([]byte("Session Variable: foo = " + ctx.Session.Get("foo")))
 }
 
 // User Is a simple user model
@@ -31,7 +30,7 @@ type User struct {
 
 // Example/Test usage
 func main() {
-	ev := enliven.New(map[string]string{
+	ev := enliven.New(enliven.Config{
 		"db.driver":   "postgres",
 		"db.host":     "127.0.0.1",
 		"db.user":     "postgres",
