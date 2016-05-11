@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"strconv"
 	"time"
 
 	"github.com/hickeroar/enliven"
@@ -12,9 +13,22 @@ import (
 )
 
 func rootHandler(ctx *enliven.Context) {
-	ctx.Session.Set("foo", "bar")
-	ctx.Response.Header().Set("Content-Type", "text/plain")
-	ctx.Response.Write([]byte("Session Variable: foo = " + ctx.Session.Get("foo")))
+	val := ctx.Session.Get("increments")
+
+	var value int
+
+	if val == "" {
+		val = "1"
+		value = 1
+	} else {
+		value, _ = strconv.Atoi(val)
+		value++
+	}
+
+	newVal := strconv.Itoa(value)
+	ctx.Session.Set("increments", newVal)
+
+	ctx.String("Session Variable: increments = " + val)
 }
 
 // User Is a simple user model
