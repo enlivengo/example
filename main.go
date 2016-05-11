@@ -30,29 +30,35 @@ type User struct {
 
 // Example/Test usage
 func main() {
-	config := map[string]string{
+	ev := enliven.New(map[string]string{
 		"db.driver":   "postgres",
 		"db.host":     "127.0.0.1",
 		"db.user":     "postgres",
 		"db.dbname":   "enliven",
 		"db.password": "postgres",
-	}
 
-	ev := enliven.New(config)
+		"session.redis.address":  "127.0.0.1:6379",
+		"session.redis.password": "",
+
+		"static.assets.route": "/assets/",
+		"static.assets.path":  "./static/",
+
+		"statik.assets.route": "/statik/",
+	})
 
 	// Adding session management middleware
-	ev.AddMiddlewareHandler(middleware.NewRedisSessionMiddleware("127.0.0.1:6379", ""))
+	ev.AddMiddleware(middleware.NewRedisSessionMiddleware(ev.GetConfig()))
 
 	// Serving static assets from the ./static/ folder as the /assets/ route
-	ev.InitPlugin(plugins.NewStaticAssetPlugin("/assets/", "./static/"))
+	ev.InitPlugin(plugins.NewStaticAssetsPlugin(ev.GetConfig()))
 
-	// The statik import sets up the data that will be used by the statik filesystem
-	// Example: '_ "github.com/hickeroar/enliven-example/statik"'
-	ev.InitPlugin(plugins.NewStatikAssetPlugin("/statik/"))
+	// The statik import sets up the data that will be used by the statik filesystem. Read Statik documentation
+	ev.InitPlugin(plugins.NewStatikAssetsPlugin(ev.GetConfig()))
 
 	// Simple route handler
-	ev.AddRoute("/", enliven.RouteHandlerFunc(rootHandler))
+	ev.AddRoute("/", rootHandler)
 
+	// We can use gorm to automigrate our database on application start
 	ev.GetDatabase().AutoMigrate(&User{})
 
 	port := flag.String("port", "8000", "The port the server should listen on.")
