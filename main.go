@@ -3,13 +3,12 @@ package main
 import (
 	"flag"
 	"strconv"
-	"time"
 
 	"github.com/hickeroar/enliven"
 	_ "github.com/hickeroar/enliven-example/statik"
-	"github.com/hickeroar/enliven/middleware"
-	"github.com/hickeroar/enliven/plugins"
-	"github.com/jinzhu/gorm"
+	"github.com/hickeroar/enliven/middleware/session"
+	"github.com/hickeroar/enliven/plugins/assets"
+	"github.com/hickeroar/enliven/plugins/auth"
 )
 
 func rootHandler(ctx *enliven.Context) {
@@ -28,18 +27,7 @@ func rootHandler(ctx *enliven.Context) {
 	newVal := strconv.Itoa(value)
 	ctx.Session.Set("increments", newVal)
 
-	ctx.String("Session Variable: increments = " + val)
-}
-
-// User Is a simple user model
-type User struct {
-	gorm.Model
-
-	Birthday time.Time
-	Age      int
-	Name     string
-	Email    string `gorm:"type:varchar(100);unique_index"`
-	Password string
+	ctx.String("Session Variable: increments = " + val + " / " + ctx.Items["UserLoggedIn"] + " / " + ctx.Items["UserID"])
 }
 
 // Example/Test usage
@@ -53,28 +41,28 @@ func main() {
 
 		"session.redis.address": "127.0.0.1:6379",
 
-		"static.assets.route": "/assets/",
-		"static.assets.path":  "./static/",
+		"assets.static.route": "/assets/",
+		"assets.static.path":  "./static/",
 
-		"statik.assets.route": "/statik/",
+		"assets.statik.route": "/statik/",
 	})
 
 	// Adding session management middleware
-	//ev.AddMiddleware(middleware.NewRedisSessionMiddleware(ev.GetConfig()))
-	//ev.AddMiddleware(middleware.NewFileSessionMiddleware(ev.GetConfig()))
-	ev.AddMiddleware(middleware.NewMemorySessionMiddleware(ev.GetConfig()))
+	//ev.AddMiddleware(session.NewRedisStorageMiddleware(ev.GetConfig()))
+	//ev.AddMiddleware(session.NewFileStorageMiddleware(ev.GetConfig()))
+	ev.AddMiddleware(session.NewMemoryStorageMiddleware(ev.GetConfig()))
 
 	// Serving static assets from the ./static/ folder as the /assets/ route
-	ev.InitPlugin(plugins.NewStaticAssetsPlugin(ev.GetConfig()))
+	ev.InitPlugin(assets.NewStaticPlugin(ev.GetConfig()))
 
 	// The statik import sets up the data that will be used by the statik filesystem. Read Statik documentation
-	ev.InitPlugin(plugins.NewStatikAssetsPlugin(ev.GetConfig()))
+	ev.InitPlugin(assets.NewStatikPlugin(ev.GetConfig()))
+
+	// The user plugin manages the user model/login/session/middleware
+	ev.InitPlugin(auth.NewUserPlugin(ev.GetConfig()))
 
 	// Simple route handler
 	ev.AddRoute("/", rootHandler)
-
-	// We can use gorm to automigrate our database on application start
-	ev.GetDatabase().AutoMigrate(&User{})
 
 	port := flag.String("port", "8000", "The port the server should listen on.")
 	flag.Parse()
