@@ -8,7 +8,7 @@ import (
 	_ "github.com/hickeroar/enliven-example/statik"
 	"github.com/hickeroar/enliven/middleware/session"
 	"github.com/hickeroar/enliven/plugins/assets"
-	"github.com/hickeroar/enliven/plugins/auth"
+	"github.com/hickeroar/enliven/plugins/user"
 )
 
 func rootHandler(ctx *enliven.Context) {
@@ -59,7 +59,7 @@ func main() {
 	ev.InitPlugin(assets.NewStatikPlugin(ev.GetConfig()))
 
 	// The user plugin manages the user model/login/session/middleware
-	ev.InitPlugin(auth.NewUserPlugin(ev.GetConfig()))
+	ev.InitPlugin(user.NewPlugin(ev.GetConfig()))
 
 	// Simple route handler
 	ev.AddRoute("/", rootHandler)
