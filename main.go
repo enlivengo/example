@@ -6,9 +6,9 @@ import (
 
 	"github.com/hickeroar/enliven"
 	_ "github.com/hickeroar/enliven-example/statik"
+	"github.com/hickeroar/enliven/apps/assets"
+	"github.com/hickeroar/enliven/apps/user"
 	"github.com/hickeroar/enliven/middleware/session"
-	"github.com/hickeroar/enliven/plugins/assets"
-	"github.com/hickeroar/enliven/plugins/user"
 )
 
 func rootHandler(ctx *enliven.Context) {
@@ -45,6 +45,10 @@ func main() {
 		"assets.static.path":  "./static/",
 
 		"assets.statik.route": "/statik/",
+
+		"user.login.route":    "/login",
+		"user.logout.route":   "/logout",
+		"user.register.route": "/register",
 	})
 
 	// Adding session management middleware
@@ -53,13 +57,14 @@ func main() {
 	ev.AddMiddleware(session.NewMemoryStorageMiddleware(ev.GetConfig()))
 
 	// Serving static assets from the ./static/ folder as the /assets/ route
-	ev.InitPlugin(assets.NewStaticPlugin(ev.GetConfig()))
+	ev.AddApp(assets.NewStaticApp(ev.GetConfig()))
 
-	// The statik import sets up the data that will be used by the statik filesystem. Read Statik documentation
-	ev.InitPlugin(assets.NewStatikPlugin(ev.GetConfig()))
+	// The statik import at the top of this file sets up the data that will be used by the statik filesystem.
+	// Read Statik documentation
+	ev.AddApp(assets.NewStatikApp(ev.GetConfig()))
 
-	// The user plugin manages the user model/login/session/middleware
-	ev.InitPlugin(user.NewPlugin(ev.GetConfig()))
+	// The user app manages the user model/login/session/middleware
+	ev.AddApp(user.NewApp(ev.GetConfig()))
 
 	// Simple route handler
 	ev.AddRoute("/", rootHandler)
