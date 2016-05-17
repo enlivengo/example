@@ -45,10 +45,6 @@ func main() {
 		"assets.static.path":  "./static/",
 
 		"assets.statik.route": "/statik/",
-
-		"user.login.route":    "/login",
-		"user.logout.route":   "/logout",
-		"user.register.route": "/register",
 	})
 
 	// Adding session management middleware

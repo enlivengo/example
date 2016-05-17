@@ -1,0 +1,16 @@
+{
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": ".go",
+                "isAsync": false,
+                "cmd": "killall debug"
+            },
+            {
+                "match": ".go",
+                "isAsync": false,
+                "cmd": "cd ${workspaceRoot} && go get"
+            }
+        ]
+    }
+}
