@@ -57,14 +57,14 @@ func main() {
 	ev.AddMiddleware(session.NewMemoryStorageMiddleware(ev.GetConfig()))
 
 	// Serving static assets from the ./static/ folder as the /assets/ route
-	ev.AddApp(assets.NewStaticApp(ev.GetConfig()))
+	ev.AddApp(assets.NewStaticApp())
 
 	// The statik import at the top of this file sets up the data that will be used by the statik filesystem.
 	// Read Statik documentation
-	ev.AddApp(assets.NewStatikApp(ev.GetConfig()))
+	ev.AddApp(assets.NewStatikApp())
 
 	// The user app manages the user model/login/session/middleware
-	ev.AddApp(user.NewApp(ev.GetConfig()))
+	ev.AddApp(user.NewApp())
 
 	// Simple route handler
 	ev.AddRoute("/", rootHandler)
