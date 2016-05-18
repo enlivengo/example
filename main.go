@@ -7,6 +7,7 @@ import (
 	"github.com/hickeroar/enliven"
 	_ "github.com/hickeroar/enliven-example/statik"
 	"github.com/hickeroar/enliven/apps/assets"
+	"github.com/hickeroar/enliven/apps/database"
 	"github.com/hickeroar/enliven/apps/user"
 	"github.com/hickeroar/enliven/middleware/session"
 )
@@ -33,11 +34,11 @@ func rootHandler(ctx *enliven.Context) {
 // Example/Test usage
 func main() {
 	ev := enliven.New(enliven.Config{
-		"db.driver":   "postgres",
-		"db.host":     "127.0.0.1",
-		"db.user":     "postgres",
-		"db.dbname":   "enliven",
-		"db.password": "postgres",
+		"database.driver":   "postgres",
+		"database.host":     "127.0.0.1",
+		"database.user":     "postgres",
+		"database.dbname":   "enliven",
+		"database.password": "postgres",
 
 		"session.redis.address": "127.0.0.1:6379",
 
@@ -58,6 +59,9 @@ func main() {
 	// The statik import at the top of this file sets up the data that will be used by the statik filesystem.
 	// Read Statik documentation
 	ev.AddApp(assets.NewStatikApp())
+
+	// The database app allows you to use....a database
+	ev.AddApp(database.NewApp())
 
 	// The user app manages the user model/login/session/middleware
 	ev.AddApp(user.NewApp())
