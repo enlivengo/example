@@ -19,7 +19,7 @@ func rootHandler(ctx *enliven.Context) {
 
 	if val == "" {
 		val = "1"
-		value = 1
+		value = 2
 	} else {
 		value, _ = strconv.Atoi(val)
 		value++
@@ -28,7 +28,11 @@ func rootHandler(ctx *enliven.Context) {
 	newVal := strconv.Itoa(value)
 	ctx.Session.Set("increments", newVal)
 
-	ctx.String("Session Variable: increments = " + val + " / " + ctx.Items["UserLoggedIn"] + " / " + ctx.Items["UserID"])
+	tmpl := "{{template \"header\"}}<div style=\"text-align:center;\">Session Variable: increments = " + val + " / " + ctx.Items["UserLoggedIn"] + " / " + ctx.Items["UserID"] + "</div>{{template \"footer\"}}"
+
+	templates := ctx.Enliven.GetTemplates()
+	templates.Parse(tmpl)
+	ctx.Template(templates)
 }
 
 // Example/Test usage
