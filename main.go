@@ -18,8 +18,7 @@ func rootHandler(ctx *enliven.Context) {
 	var value int
 
 	if val == "" {
-		val = "1"
-		value = 2
+		value = 1
 	} else {
 		value, _ = strconv.Atoi(val)
 		value++
@@ -28,7 +27,7 @@ func rootHandler(ctx *enliven.Context) {
 	newVal := strconv.Itoa(value)
 	ctx.Session.Set("increments", newVal)
 
-	tmpl := "{{template \"header\"}}<div style=\"text-align:center;\">Session Variable: increments = " + val + " / " + ctx.Items["UserLoggedIn"] + " / " + ctx.Items["UserID"] + "</div>{{template \"footer\"}}"
+	tmpl := "{{template \"header\"}}<div style=\"text-align:center;\">Session Variable: increments = {{.Session.Get \"increments\"}} / {{.Booleans.UserLoggedIn}} / {{.Integers.UserID}}</div>{{template \"footer\"}}"
 
 	templates := ctx.Enliven.GetTemplates()
 	templates.Parse(tmpl)
@@ -72,6 +71,15 @@ func main() {
 
 	// Simple route handler
 	ev.AddRoute("/", rootHandler)
+
+	// This is a commented-out example of how you can override the existing header/footer templates.
+	// You will most likely want to do this as the built-in one is not meant for general consumption
+	// as it has embedded images(base64 encoded)/css/javascript.
+	/*
+		templates := ev.GetTemplates()
+		templates.Parse("{{define \"header\"}}OMG Becky did you see her butt?{{end}}")
+		templates.Parse("{{define \"footer\"}}OMG it's so big.{{end}}")
+	*/
 
 	port := flag.String("port", "8000", "The port the server should listen on.")
 	flag.Parse()
