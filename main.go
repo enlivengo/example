@@ -34,18 +34,18 @@ func rootHandler(ctx *enliven.Context) {
 // Example/Test usage
 func main() {
 	ev := enliven.New(enliven.Config{
-		"database.driver":   "postgres",
-		"database.host":     "127.0.0.1",
-		"database.user":     "postgres",
-		"database.dbname":   "enliven",
-		"database.password": "postgres",
+		"database_driver":   "postgres",
+		"database_host":     "127.0.0.1",
+		"database_user":     "postgres",
+		"database_dbname":   "enliven",
+		"database_password": "postgres",
 
-		"session.redis.address": "127.0.0.1:6379",
+		"session_redis_address": "127.0.0.1:6379",
 
-		"assets.static.route": "/assets/",
-		"assets.static.path":  "./static/",
+		"assets_static_route": "/assets/",
+		"assets_static_path":  "./static/",
 
-		"assets.statik.route": "/statik/",
+		"assets_statik_route": "/statik/",
 	})
 
 	// Adding session management middleware
