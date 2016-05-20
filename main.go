@@ -6,6 +6,7 @@ import (
 
 	"github.com/hickeroar/enliven"
 	_ "github.com/hickeroar/enliven-example/statik"
+	"github.com/hickeroar/enliven/apps/admin"
 	"github.com/hickeroar/enliven/apps/assets"
 	"github.com/hickeroar/enliven/apps/database"
 	"github.com/hickeroar/enliven/apps/user"
@@ -63,11 +64,14 @@ func main() {
 	// Read Statik documentation
 	ev.AddApp(assets.NewStatikApp())
 
-	// The database app allows you to use....a database
+	// DATABASE The database app allows you to use....a database
 	ev.AddApp(database.NewApp())
 
-	// The user app manages the user model/login/session/middleware
+	// USER The user app manages the user model/login/session/middleware
 	ev.AddApp(user.NewApp())
+
+	// ADMIN The user app manages the admin panel
+	ev.AddApp(admin.NewApp())
 
 	// Simple route handler
 	ev.AddRoute("/", rootHandler)
