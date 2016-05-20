@@ -81,7 +81,7 @@ func main() {
 		templates.Parse("{{define \"footer\"}}OMG it's so big.{{end}}")
 	*/
 
-	port := flag.String("port", "8000", "The port the server should listen on.")
+	port := flag.String("port", ev.GetConfig()["server_port"], "The port the server should listen on.")
 	flag.Parse()
 
 	ev.Run(*port)
