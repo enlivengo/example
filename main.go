@@ -31,7 +31,7 @@ func rootHandler(ctx *enliven.Context) {
 	tmpl := "{{define \"home\"}}{{template \"header\"}}<div style=\"text-align:center;\">Session Variable: increments = {{.Session.Get \"increments\"}} / {{.Booleans.UserLoggedIn}} / {{.Integers.UserID}}</div>{{template \"footer\"}}{{end}}"
 	templates := ctx.Enliven.GetTemplates()
 	templates.Parse(tmpl)
-	ctx.NamedTemplate(templates, "home")
+	ctx.Template("home")
 }
 
 // Example/Test usage
