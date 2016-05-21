@@ -28,9 +28,6 @@ func rootHandler(ctx *enliven.Context) {
 	newVal := strconv.Itoa(value)
 	ctx.Session.Set("increments", newVal)
 
-	tmpl := "{{define \"home\"}}{{template \"header\"}}<div style=\"text-align:center;\">Session Variable: increments = {{.Session.Get \"increments\"}} / {{.Booleans.UserLoggedIn}} / {{.Integers.UserID}}</div>{{template \"footer\"}}{{end}}"
-	templates := ctx.Enliven.GetTemplates()
-	templates.Parse(tmpl)
 	ctx.Template("home")
 }
 
