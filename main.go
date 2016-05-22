@@ -49,9 +49,9 @@ func main() {
 	})
 
 	// Adding session management middleware
-	ev.AddMiddleware(session.NewRedisStorageMiddleware(ev.GetConfig()))
-	//ev.AddMiddleware(session.NewFileStorageMiddleware(ev.GetConfig()))
-	//ev.AddMiddleware(session.NewMemoryStorageMiddleware(ev.GetConfig()))
+	ev.AddMiddleware(session.NewRedisStorageMiddleware())
+	//ev.AddMiddleware(session.NewFileStorageMiddleware())
+	//ev.AddMiddleware(session.NewMemoryStorageMiddleware())
 
 	// Serving static assets from the ./static/ folder as the /assets/ route
 	ev.AddApp(assets.NewStaticApp())
