@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"strconv"
 
 	"github.com/hickeroar/enliven"
@@ -10,6 +9,7 @@ import (
 	"github.com/hickeroar/enliven/apps/assets"
 	"github.com/hickeroar/enliven/apps/database"
 	"github.com/hickeroar/enliven/apps/user"
+	"github.com/hickeroar/enliven/config"
 	"github.com/hickeroar/enliven/middleware/session"
 )
 
@@ -33,7 +33,7 @@ func rootHandler(ctx *enliven.Context) {
 
 // Example/Test usage
 func main() {
-	ev := enliven.New(enliven.Config{
+	ev := enliven.New(config.Config{
 		"database_driver":   "postgres",
 		"database_host":     "127.0.0.1",
 		"database_user":     "postgres",
@@ -81,8 +81,5 @@ func main() {
 		templates.Parse("{{define \"footer\"}}OMG it's so big.{{end}}")
 	*/
 
-	port := flag.String("port", ev.GetConfig()["server_port"], "The port the server should listen on.")
-	flag.Parse()
-
-	ev.Run(*port)
+	ev.Run()
 }
