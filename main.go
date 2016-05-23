@@ -34,6 +34,10 @@ func rootHandler(ctx *enliven.Context) {
 // Example/Test usage
 func main() {
 	ev := enliven.New(config.Config{
+		"email_smtp_host":    "localhost",
+		"email_smtp_auth":    "none",
+		"email_from_default": "noreply@enliven.app",
+
 		"database_driver":   "postgres",
 		"database_host":     "127.0.0.1",
 		"database_user":     "postgres",
