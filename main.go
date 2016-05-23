@@ -3,14 +3,14 @@ package main
 import (
 	"strconv"
 
-	"github.com/hickeroar/enliven"
-	_ "github.com/hickeroar/enliven-example/statik"
-	"github.com/hickeroar/enliven/apps/admin"
-	"github.com/hickeroar/enliven/apps/assets"
-	"github.com/hickeroar/enliven/apps/database"
-	"github.com/hickeroar/enliven/apps/user"
-	"github.com/hickeroar/enliven/config"
-	"github.com/hickeroar/enliven/middleware/session"
+	"github.com/enlivengo/admin"
+	"github.com/enlivengo/enliven"
+	"github.com/enlivengo/enliven/apps/assets"
+	"github.com/enlivengo/enliven/apps/database"
+	"github.com/enlivengo/enliven/apps/user"
+	"github.com/enlivengo/enliven/config"
+	"github.com/enlivengo/enliven/middleware/session"
+	_ "github.com/enlivengo/example/statik"
 )
 
 func rootHandler(ctx *enliven.Context) {
