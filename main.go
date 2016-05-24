@@ -6,7 +6,8 @@ import (
 	"github.com/enlivengo/admin"
 	"github.com/enlivengo/database"
 	"github.com/enlivengo/enliven"
-	"github.com/enlivengo/enliven/apps/assets"
+	"github.com/enlivengo/enliven/apps/static"
+	"github.com/enlivengo/enliven/apps/statik"
 	"github.com/enlivengo/enliven/config"
 	"github.com/enlivengo/enliven/middleware/session"
 	_ "github.com/enlivengo/example/statik"
@@ -57,12 +58,12 @@ func main() {
 	//ev.AddMiddleware(session.NewFileStorageMiddleware())
 	//ev.AddMiddleware(session.NewMemoryStorageMiddleware())
 
-	// Serving static assets from the ./static/ folder as the /assets/ route
-	ev.AddApp(assets.NewStaticApp())
+	// Serving static assets from the ./static/ folder at the /assets/ route
+	ev.AddApp(static.NewApp())
 
 	// The statik import at the top of this file sets up the data that will be used by the statik filesystem.
 	// Read Statik documentation
-	ev.AddApp(assets.NewStatikApp())
+	ev.AddApp(statik.NewApp())
 
 	// DATABASE The database app allows you to use....a database
 	ev.AddApp(database.NewApp())
