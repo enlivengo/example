@@ -6,11 +6,11 @@ import (
 	"github.com/enlivengo/admin"
 	"github.com/enlivengo/database"
 	"github.com/enlivengo/enliven"
-	"github.com/enlivengo/enliven/apps/statik"
 	"github.com/enlivengo/enliven/config"
 	"github.com/enlivengo/enliven/middleware/session"
 	_ "github.com/enlivengo/example/statik"
 	"github.com/enlivengo/static"
+	"github.com/enlivengo/statik"
 	"github.com/enlivengo/user"
 )
 
