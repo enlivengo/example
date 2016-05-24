@@ -4,9 +4,9 @@ import (
 	"strconv"
 
 	"github.com/enlivengo/admin"
+	"github.com/enlivengo/database"
 	"github.com/enlivengo/enliven"
 	"github.com/enlivengo/enliven/apps/assets"
-	"github.com/enlivengo/enliven/apps/database"
 	"github.com/enlivengo/enliven/config"
 	"github.com/enlivengo/enliven/middleware/session"
 	_ "github.com/enlivengo/example/statik"
