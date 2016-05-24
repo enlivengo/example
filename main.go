@@ -7,10 +7,10 @@ import (
 	"github.com/enlivengo/enliven"
 	"github.com/enlivengo/enliven/apps/assets"
 	"github.com/enlivengo/enliven/apps/database"
-	"github.com/enlivengo/enliven/apps/user"
 	"github.com/enlivengo/enliven/config"
 	"github.com/enlivengo/enliven/middleware/session"
 	_ "github.com/enlivengo/example/statik"
+	"github.com/enlivengo/user"
 )
 
 func rootHandler(ctx *enliven.Context) {
@@ -70,7 +70,7 @@ func main() {
 	// USER The user app manages the user model/login/session/middleware
 	ev.AddApp(user.NewApp())
 
-	// ADMIN The user app manages the admin panel
+	// ADMIN The admin app manages the admin panel
 	ev.AddApp(admin.NewApp())
 
 	// Simple route handler
