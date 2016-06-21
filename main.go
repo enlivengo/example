@@ -34,7 +34,7 @@ func rootHandler(ctx *enliven.Context) {
 	ctx.Template("home")
 }
 
-// Example/Test usage
+// Example/Test usage.
 func main() {
 	ev := enliven.New(config.Config{
 		"email_smtp_host":    "localhost",
