@@ -2,18 +2,11 @@
     "emeraldwalk.runonsave": {
         "commands": [
             {
-                "match": ".go",
-                "isAsync": false,
+                "match": ".go|.html|.css|.js|.json",
                 "cmd": "cd ${workspaceRoot} && go get"
             },
             {
-                "match": ".html",
-                "isAsync": false,
-                "cmd": "cd ${workspaceRoot} && rm -f ./statik/"
-            },
-            {
-                "match": ".html",
-                "isAsync": false,
+                "match": ".go|.html|.css|.js|.json",
                 "cmd": "cd ${workspaceRoot} && go generate ./..."
             }
         ]

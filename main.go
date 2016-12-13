@@ -31,7 +31,7 @@ func rootHandler(ctx *enliven.Context) {
 	newVal := strconv.Itoa(value)
 	ctx.Session.Set("increments", newVal)
 
-	ctx.Template("home")
+	ctx.ExecuteBaseTemplate("home")
 }
 
 // Example/Test usage
