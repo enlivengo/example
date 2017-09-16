@@ -44,8 +44,9 @@ func main() {
 		"database_driver":   "postgres",
 		"database_host":     "127.0.0.1",
 		"database_user":     "postgres",
-		"database_dbname":   "enliven",
+		"database_dbname":   "postgres",
 		"database_password": "postgres",
+		"database_port":     "5433",
 
 		"session_redis_address": "127.0.0.1:6379",
 
